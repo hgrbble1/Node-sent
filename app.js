@@ -3,6 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var hbs = require('express-handlebars');
+var nodeoutlook = require('nodejs-nodemailer-outlook');
+var papa = require('papaparse');
+var multer = require('multer');
+var upload = multer();
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
