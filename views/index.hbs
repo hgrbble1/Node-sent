@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Excel Emailing App</title>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
+  <link rel="stylesheet" href="../public/CSS/style.css"/>
+</head>
+<body style="padding-top: 0px;">
+  <div class="container" style="padding-top: 0px;padding-bottom: 0px;">
+    <h1 class="brand"><span>Fedex</span> Excel Emailing App Using Outlook</h1>
+    <div class="wrapper animated bounceInLeft">
+      <div class="company-info">
+        <h3>App Instructions</h3>
+        <ul>
+          <li>Enter your name and phone number</li>
+          <li>Enter your outlook email and password</li>
+          <li>Enter the receivers email addresses (separated by a comma)</li>
+          <li>Enter a short description of the data</li>
+        </ul>
+      </div>
+      <div class="contact">
+        <h3>Email Excel Data</h3>
+        {{msg}}
+        <form id="uploadForm"
+              enctype="multipart/form-data"
+              method="POST"
+              action="/formData">
+          <p>
+            <label>Name</label>
+            <input type="name" name="name">
+          </p>
+          <p>
+            <label>Phone number</label>
+            <input type="phone" name="phone">
+          </p>
+          <p>
+            <label>Email Address</label>
+            <input type="email" name="email" required>
+          </p>
+          <p>
+            <label>Password</label>
+            <input type="password" name="password" required>
+          </p>
+          <p>
+            <label>Receivers Email Addresses</label>
+            <input type="email" name="receiverEmail" list="defaultEmails" placeholder="email1@example.com, email2@example.com" multiple required>
+            <datalist id="defaultEmails">
+              <option value="listEmail@example.com">
+              <option value="listEmail1@example.com">
+              <option value="listEmail2@example.com">
+            </datalist>
+          </p>
+          <p>
+            <label>Attach file</label>
+            <input type="file" name="file" accept=".xlsx, .doc, .JSON, .html, .csv">
+          </p>
+          <p class="full">
+            <label>Message</label>
+            <textarea name="message" rows="5"></textarea>
+          </p>
+          <p class="full">
+            <button type="submit">Submit</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+  $(document).ready(function() {
+
+    $('#uploadForm').submit(function(evt) {
+        //evt.preventDefault();
+      $("#status").empty().text("File is uploading...");
+      $(this).ajaxSubmit({
+
+        error: function(xhr) {
+          console.log('Error:' + xhr.status);
+        },
+        success: function(response) {
+          $("#status").empty().text(response);
+              console.log(response);
+          window.location.href="http://localhost:3000/previewEmailTemplate";
+        }
+      });
+      return false;
+     });
+   });
+  </script>
+</body>
+</html>
