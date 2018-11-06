@@ -4,7 +4,7 @@ var router = express.Router();
 // Get the preview of Email Template
 router.get('/preview', function(req, res, next) {
   res.render('previewEmailTemplate', {
-    layout: 'emailLayout.handlebars',
+    layout: 'emailLayout.hbs',
     title: 'iSell',
     app: 'iSell'
   });

@@ -33,6 +33,7 @@ app.use('/csv', express.static(__dirname + '/public/csv'));
 
 app.use('/', indexRouter);
 app.get('/preview', preview);
+app.get('/emailTemplate', emailTemplate);
 
 app.post('/formData', upload.single('file'), function(req, res, next) {
   var stringCSV = req.file.buffer.toString('utf8');
@@ -46,6 +47,23 @@ app.post('/formData', upload.single('file'), function(req, res, next) {
   console.log(outputReceiverEmail);
   res.send('file uploaded');
 });
+
+app.post('/send', (req, res, next) => {
+  //console.log(template);
+    // Send email function
+    nodeoutlook.sendEmail({
+        auth: {
+            user: email,
+            pass: password
+            },
+            from: email,
+            to: outputReceiverEmail,
+            subject: 'Email Excel Data',
+            html: template
+    });
+    res.send('send it'); //re-render the page after email is sent
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
