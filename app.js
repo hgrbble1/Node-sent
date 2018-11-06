@@ -11,7 +11,8 @@ var upload = multer();
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var preview = require('./routes/previewEmailTemplate');
+var emailTemplate = require('./routes/emailTemplate');
 
 var app = express();
 
@@ -31,12 +32,27 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/csv', express.static(__dirname + '/public/csv'));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.get('/preview', preview);
+
+app.post('/formData', upload.single('file'), function(req, res, next) {
+  var stringCSV = req.file.buffer.toString('utf8');
+  global.csvData = papa.parse(stringCSV, {header: true});
+  name = req.body.name;
+  password = req.body.password;
+  email = req.body.email;
+  console.log(email);
+  phoneNumber = req.body.phone;
+  outputReceiverEmail = req.body.receiverEmail;
+  console.log(outputReceiverEmail);
+  res.send('file uploaded');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+
 
 // error handler
 app.use(function(err, req, res, next) {

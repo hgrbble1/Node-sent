@@ -27,7 +27,7 @@
         {{msg}}
         <form id="uploadForm"
               enctype="multipart/form-data"
-              method="POST"
+              method="post"
               action="/formData">
           <p>
             <label>Name</label>
@@ -83,7 +83,7 @@
         success: function(response) {
           $("#status").empty().text(response);
               console.log(response);
-          window.location.href="http://localhost:3000/previewEmailTemplate";
+          window.location.href="http://localhost:3000/preview";
         }
       });
       return false;
