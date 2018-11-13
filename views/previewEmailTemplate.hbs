@@ -652,9 +652,11 @@ img.img-responsive {
                 data: html,
                 error: function(error) {
                   console.log('Error' + error);
+                    window.location.href="http://localhost:3000/";
                 },
                 success: function(response) {
                   console.log(response);
+                    window.location.href="http://localhost:3000/";
                 }
               });
             }
